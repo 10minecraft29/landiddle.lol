@@ -1,5 +1,44 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Basement — Landiddle</title><link rel="stylesheet" href="/style.css"></head><body class="scanlines"><div class="noise"></div><div class="container"><nav class="nav"><a class="brand" href="/"><div class="brand-mark">L</div><div>LANDIDDLE<small>UNLISTED FACILITY</small></div></a><div class="navlinks"><a href="/classified">Archive</a><a href="/">Leave</a></div><span class="badge"><i class="dot" style="background:var(--danger);box-shadow:0 0 12px var(--danger)"></i> unregistered route</span></nav></div>
-<main><section class="page-head"><div class="container"><div class="eyebrow">LOCATION UNKNOWN // SUBLEVEL ?</div><h1 class="glitch-title" data-text="THE BASEMENT">THE BASEMENT</h1><p>The building directory says this floor does not exist. The elevator disagrees.</p></div></section><section><div class="container"><div class="grid"><div class="span-7 server-room"><div class="rack r1"><i class=leds></i></div><div class="rack r2"><i class=leds></i></div><div class="rack r3"><i class=leds></i></div><div class="basement-label">CAM-03 // SIGNAL DEGRADED</div></div><div class="span-5 terminal"><div class="terminal-top"><i></i><i></i><i></i>&nbsp; server03.local</div><div class="terminal-body" id="term"></div><div class="term-line"><span>operator@server03:/$</span><input id="cmd" autocomplete="off" placeholder="help"></div></div></div></div></section></main>
-<footer class="footer"><div class="container"><div class="footer-row"><span>Do not remain below ground after 02:14.</span><a href="/classified">Return to Files</a></div></div></footer><script src="/site.js"></script><script>
-const t=document.querySelector('#term'),c=document.querySelector('#cmd');bootText(t,['SERVER 03 MAINTENANCE CONSOLE','power_source: UNKNOWN','network_link: ACTIVE','session owner: guest',''],13);const m={help:'help, status, ls, cat server03.log, cat note.txt, whoami, clear',status:'CPU: 4%\nMEM: 19%\nUPTIME: -4137 days\nPOWER: 0 W\nPROCESS landoodle.rec: RUNNING',ls:'server03.log\nnote.txt\narchive.mount\n[employee000]','cat server03.log':'02:14:00 archive mirror started\n02:14:01 door sensor opened\n02:14:01 user 000 authenticated\n02:14:02 POWER LOST\n02:14:03 process landoodle.rec continues\n02:14:04 do not turn around','cat note.txt':'HANDWRITTEN TRANSCRIPTION:\n\n"LANDO" is only half of it.\nThe rest is where rules are made.','whoami':'guest\n(no employee record)'};c.onkeydown=e=>{if(e.key!=='Enter')return;let q=c.value.trim().toLowerCase();c.value='';if(q==='clear'){t.textContent='';return}t.textContent+=`\noperator@server03:/$ ${q}\n${m[q]??'unknown command'}`;t.scrollTop=t.scrollHeight};
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERVER03 Console — Landiddle</title><link rel="stylesheet" href="/style.css"></head><body class="scanlines basement-v2"><div class="noise"></div><div class="container"><nav class="nav"><a class="brand" href="/"><div class="brand-mark">L</div><div>LANDIDDLE<small>UNLISTED SUBLEVEL</small></div></a><div class="navlinks"><a href="/classified">Archive</a><a href="/">Leave</a></div><span class="badge danger-badge">UNREGISTERED ROUTE</span></nav></div>
+<main><section class="page-head compact"><div class="container"><div class="eyebrow">SUBLEVEL ? // NETWORK OPERATIONS BELOW FOUNDATION</div><h1 class="glitch-title" data-text="SERVER03">SERVER03</h1><p>The approved floor plan ends 4.7 meters above this room. The network does not.</p></div></section>
+<section><div class="container"><div class="basement-grid"><div class="evidence-frame basement-camera"><div class="cam-label">CAM-B03 // LIVE-ish // 02:14 LOOP</div><div class="server-room"><div class="rack r1"><i class="leds"></i></div><div class="rack r2 active-rack"><i class="leds"></i><b>03</b></div><div class="rack r3"><i class="leds"></i></div><div class="basement-label">POWER FEED A: OPEN // FEED B: OPEN // NETWORK: ACTIVE</div></div></div><div class="terminal full-terminal"><div class="terminal-top"><i></i><i></i><i></i>&nbsp; server03.local — maintenance shell</div><div class="terminal-body" id="term"></div><div class="term-line"><span id="prompt">operator@server03:/$</span><input id="cmd" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help"></div></div></div></div></section></main>
+<footer class="footer"><div class="container"><div class="footer-row"><span>Do not remain below ground after 02:14.</span><span>Physical power draw: 0 W</span></div></div></footer>
+<script src="/site.js"></script><script>
+const t=document.querySelector('#term'),c=document.querySelector('#cmd'),prompt=document.querySelector('#prompt');let cwd='/';let history=[],hidx=0;
+const fs={
+'/':{type:'dir',items:['logs','notes','archive.mount','employee000','proc']},
+'/logs':{type:'dir',items:['server03.log','incident-714.log','badge000.log']},
+'/notes':{type:'dir',items:['fragment.hex','wall.txt']},
+'/proc':{type:'dir',items:['landoodle.rec']},
+'/archive.mount':{type:'file',text:'MIRROR A -> /classified\nmode: read/write?\nowner: 000'},
+'/employee000':{type:'file',text:'credential 000\nstatus: REVOKED\nlast_auth: 2026-08-18 02:14:01\nlast_location: server03'},
+'/logs/server03.log':{type:'file',text:'2025-02-03 19:42:11Z power_feed_A OPEN\n2025-02-03 19:42:12Z power_feed_B OPEN\n2025-02-03 19:42:13Z measured_draw 0W\n2025-02-03 19:42:14Z process landoodle.rec RUNNING\n2025-02-03 19:42:15Z user 000 authenticated\n2025-02-03 19:42:16Z [operator note removed]'},
+'/logs/incident-714.log':{type:'file',text:'2024-07-14 02:14:00 clock_sync LOST\n02:14:01 badge 000 GRANTED\n02:14:01 camera C03 subject_detected\n02:14:02 archive mirror forked\n02:21:00 clock_sync RESTORED\n02:21:00 fork_count 2'},
+'/logs/badge000.log':{type:'file',text:'credential created: 2017-11-03\ncredential revoked: 2017-11-03\naccess events after revocation: 8,441\nissuer: 000'},
+'/notes/fragment.hex':{type:'file',text:'Recovered from rack rail etching. Preserve bytes.\n\n4C 41 4E\n\nclassification: phrase_fragment / sequence 01'},
+'/notes/wall.txt':{type:'file',text:'DO NOT LET THE ARCHIVE SEE ITSELF\nDO NOT LET THE ARCHIVE SEE YOU\n000 WAS HERE BEFORE THE ROOM'},
+'/proc/landoodle.rec':{type:'file',text:'pid: 0\nparent: 0\nowner: 000\nstarted: [negative timestamp]\nstate: observing\nopen_sessions: 1'}
+};
+function norm(path){if(!path)return cwd;if(path==='..'){if(cwd==='/')return '/';return cwd.split('/').slice(0,-1).join('/')||'/'}if(path.startsWith('/'))return path.replace(/\/$/,'')||'/';return (cwd==='/'?'':cwd)+'/'+path.replace(/\/$/,'')}
+function print(s=''){t.textContent+='\n'+s;t.scrollTop=t.scrollHeight}
+function run(raw){const q=raw.trim();if(!q)return;const [cmd,...rest]=q.split(/\s+/);const arg=rest.join(' ');print(`${prompt.textContent} ${q}`);switch(cmd.toLowerCase()){
+case 'help':print('help  ls [path]  cd <dir>  pwd  cat <file>  clear\nwhoami  status  ping server03  ps  date  history  id  mount\nSome maintenance commands are intentionally undocumented.');break;
+case 'pwd':print(cwd);break;
+case 'ls':{const p=norm(arg);const n=fs[p];print(n&&n.type==='dir'?n.items.map(x=>fs[normFrom(p,x)]?.type==='dir'?x+'/':x).join('  '):n?'not a directory':'no such path');break}
+case 'cd':{const p=norm(arg||'/');if(fs[p]?.type==='dir'){cwd=p;prompt.textContent=`operator@server03:${cwd}$`}else print('cd: no such directory');break}
+case 'cat':{const p=norm(arg);const n=fs[p];if(n?.type==='file'){print(n.text);if(p==='/notes/fragment.hex')LandiddleProgress.clue('frag-lan');if(p==='/proc/landoodle.rec')LandiddleProgress.action('proc-observed')}else print('cat: no such file');break}
+case 'clear':t.textContent='';break;
+case 'whoami':print('operator\nresolved_employee_record: none\nsession_owner_override: 000');break;
+case 'id':print('uid=0(unknown) gid=0(archive) groups=0,3,000');break;
+case 'status':print('POWER: 0 W\nNETWORK: ACTIVE\nUPTIME: -4,137 days\nLANDOODLE.REC: RUNNING\nOBSERVER COUNT: 1');break;
+case 'ping':print(arg.toLowerCase()==='server03'?'64 bytes from 10.0.0.3: time=-1ms\n64 bytes from 10.0.0.3: time=-1ms\nreply payload: ALREADY_CONNECTED':'unknown host');break;
+case 'ps':print('PID  USER  COMMAND\n0    000   landoodle.rec\n14   ?     mirror-a\n211  you   shell');break;
+case 'date':print('Tue Aug 18 02:14:00 EDT 2026\nwarning: system clock disagrees with gateway by 7 minutes');break;
+case 'history':print(history.map((x,i)=>`${i+1}  ${x}`).join('\n'));break;
+case 'mount':print('/dev/archive0 on /classified type recursive (rw,observer=000)');break;
+case 'trace':if(arg==='000'){print('route trace: badge000 -> archive -> server03 -> [CURRENT SESSION]\nunindexed record may exist at /employee-000');LandiddleProgress.action('trace-000')}else print('trace: target not found');break;
+case 'open':print('Network shell cannot open browser routes.');break;
+default:print(`${cmd}: command not found`)} }
+function normFrom(base,item){return (base==='/'?'':base)+'/'+item}
+bootText(t,['SERVER 03 MAINTENANCE CONSOLE','power_source: UNKNOWN','network_link: ACTIVE','archive_mount: PRESENT','Type help.'],9);
+c.addEventListener('keydown',e=>{if(e.key==='ArrowUp'){e.preventDefault();hidx=Math.max(0,hidx-1);c.value=history[hidx]||'';return}if(e.key==='ArrowDown'){e.preventDefault();hidx=Math.min(history.length,hidx+1);c.value=history[hidx]||'';return}if(e.key!=='Enter')return;const q=c.value;c.value='';if(q.trim()){history.push(q.trim());hidx=history.length;run(q)}});
 </script></body></html>
