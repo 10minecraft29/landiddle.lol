@@ -88,3 +88,24 @@ button,input{font:inherit}
 .corrupt{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#8b919d;min-height:180px;white-space:pre-wrap}
 .hidden-clue{opacity:.03;user-select:text}.hidden-clue:hover{opacity:.2}
 @media(max-width:800px){.navlinks{display:none}.span-7,.span-5,.span-4,.span-8{grid-column:span 12}.hero{padding-top:68px}.hero h1{font-size:clamp(58px,18vw,90px)}.file-row{grid-template-columns:85px 1fr 90px}.file-size{display:none}.gov-links{grid-template-columns:1fr}.rack{width:100px;height:250px}.rack.r1{left:4%}.rack.r2{left:calc(50% - 50px)}.rack.r3{right:4%}.section-head{align-items:flex-start;flex-direction:column}}
+
+/* Landoodle Files archive polish */
+body.archive-page{background:
+  radial-gradient(circle at 85% 0%,rgba(180,108,255,.14),transparent 28%),
+  linear-gradient(rgba(7,7,10,.94),rgba(7,7,10,.98)),
+  repeating-linear-gradient(90deg,transparent 0 79px,rgba(255,255,255,.012) 80px),
+  var(--bg)}
+.archive-page .page-head{position:relative;overflow:hidden;border-bottom:1px solid rgba(180,108,255,.12)}
+.archive-page .page-head:after{content:"TOP SECRET // LANDOODLE ARCHIVE";position:absolute;right:4vw;bottom:16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.22em;color:rgba(180,108,255,.25);transform:rotate(-1deg)}
+.archive-page .archive-toolbar{padding:14px;border:1px solid #252936;border-radius:14px;background:rgba(10,11,15,.72);box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.archive-page .file-list{box-shadow:0 28px 90px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.025)}
+.archive-page .file-row{position:relative;min-height:62px}
+.archive-page .file-row:before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:transparent;transition:.15s ease}
+.archive-page .file-row:hover:before{background:var(--accent);box-shadow:0 0 18px var(--accent)}
+.archive-page .file-id{color:#b58bcf;font-weight:800;letter-spacing:.08em}
+.archive-page .file-status{letter-spacing:.08em}
+.archive-page .file-name:after{content:"  ↗";opacity:0;color:var(--accent);transition:.15s}
+.archive-page .file-row:hover .file-name:after{opacity:.7}
+.archive-page .search:focus{border-color:rgba(180,108,255,.65);box-shadow:0 0 0 3px rgba(180,108,255,.08)}
+.archive-page .modal-card{outline:1px solid rgba(180,108,255,.08);box-shadow:0 45px 140px #000,0 0 70px rgba(111,44,255,.09)}
+@media(max-width:600px){.archive-page .page-head:after{display:none}.archive-page .file-row{grid-template-columns:72px 1fr}.archive-page .file-status{grid-column:2}.archive-page .file-size{display:none}}
