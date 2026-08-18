@@ -1,9 +1,14 @@
-# Landiddle.lol — Landoodle Files ARG v2
+# Landiddle.lol — Landoodle Files ARG v3
 
-Flat static build for Vercel. All site files remain in one directory.
+Flat static Vercel build. Every file lives in this single directory.
 
-Core routes: `/`, `/classified`, `/basement`, `/government`, `/bonzi`, `/404-but-worse`.
+## Main routes
+`/`, `/classified`, `/caseboard`, `/timeline`, `/cameras`, `/facility-map`, `/government`, `/bonzi`, `/audio`, `/mailbox`, `/directory`, `/history`.
 
-Unindexed routes include `/employee-000`, `/server03`, `/incident-714`, `/null`, `/archive/deleted`, and `/project-landoodle`.
+## Unindexed / discovery routes
+`/basement`, `/server03`, `/console`, `/employee-000`, `/incident-714`, `/null`, `/archive/deleted`, `/project-landoodle`, `/404-but-worse`.
 
-Progress is saved in localStorage under `landiddle-progress-v2`.
+## State
+Progress, archive phase, login attempts, discoveries, read counts, fake internal history, achievements, recovered blocks, and endings are stored locally under `landiddle-state-v3`.
+
+The public audit archive credential is displayed on the archive login screen. Other credentials and routes are intended to be discovered through the site.

@@ -1,18 +1,1 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>server03</title><link rel="stylesheet" href="/style.css"></head><body class="scanlines secret-black"><main class="secret-terminal"><pre>SERVER03 SERVICE PAGE
-=====================
-route source: unknown
-power: 0 W
-network: active
-owner: 000
-process: landoodle.rec
-
-This endpoint is not served by the public gateway.
-It still knows you requested it.
-
-session_count: 1
-observer_count: 1
-mirror_count: 2
-
-[02:14:01] badge 000 authenticated
-[02:14:01] observer attached
-[02:14:02] archive branch created</pre></main><script src="/site.js"></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>server03.local</title><link rel="stylesheet" href="/style.css"></head><body class="scanlines secret-black"><main class="secret-terminal"><pre id="service"></pre><p><a class="btn" href="/basement">OPEN MAINTENANCE SHELL</a></p></main><script src="/site.js"></script><script>LandiddleState.phase(2);landiddleAward('server');const s=LandiddleState.read(),bad=s.login.attempts.filter(x=>x.result==='denied');document.querySelector('#service').textContent=`SERVER03 SERVICE PAGE\n=====================\npower: 0 W\nnetwork: active\nowner: E000\nprocess: landoodle.rec\ninstall date: 2004-02-03\noldest self-reference: 2001-07-14\n\nsession: ${s.session}\nobserver_count: 1\nmirror_count: ${s.phase>=3?3:2}\n\nRECENT ARCHIVE AUTH FAILURES:\n${bad.length?bad.slice(-6).map(x=>x.id+' @ '+x.at).join('\n'):'none'}\n\n[02:14:01] badge 000 authenticated\n[02:14:01] observer attached\n[02:14:02] archive branch created\n\nE000: ${s.opened.includes('LF-006')?'LF-006 IS INCORRECT.':'YOU HAVE NOT READ MY PERSONNEL FILE YET.'}`;</script></body></html>
