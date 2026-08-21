@@ -24,8 +24,9 @@ function fresh(){const now=new Date();return {
   ]
 }}
 function migrate(s){try{const old=JSON.parse(localStorage.getItem(OLD_KEY)||'null');if(!old)return s;['opened','clues','unlocked','visited','actions'].forEach(k=>{if(Array.isArray(old[k]))s[k]=[...new Set([...s[k],...old[k]])]});if(s.unlocked.includes('lf009'))s.phase=Math.max(s.phase,3);return s}catch{return s}}
-function load(){try{const raw=localStorage.getItem(STATE_KEY);if(raw)return Object.assign(fresh(),JSON.parse(raw));const s=migrate(fresh());localStorage.setItem(STATE_KEY,JSON.stringify(s));return s}catch{return fresh()}}
-function save(s){localStorage.setItem(STATE_KEY,JSON.stringify(s));window.dispatchEvent(new CustomEvent('landiddle-state',{detail:s}));return s}
+function normalizeState(value){const base=fresh(),v=value&&typeof value==='object'?value:{};const s=Object.assign(base,v);for(const k of ['opened','clues','unlocked','visited','actions','achievements','endings','recovered','cameraViews','audioPlayed','hiddenSearches'])if(!Array.isArray(s[k]))s[k]=[];if(!s.readCounts||typeof s.readCounts!=='object'||Array.isArray(s.readCounts))s.readCounts={};if(!Array.isArray(s.history))s.history=base.history;if(!s.login||typeof s.login!=='object'||Array.isArray(s.login))s.login=base.login;if(!Array.isArray(s.login.attempts))s.login.attempts=[];s.login.authenticated=!!s.login.authenticated;s.login.clearance=Number.isFinite(Number(s.login.clearance))?Number(s.login.clearance):0;s.phase=Math.max(0,Math.min(4,Number.isFinite(Number(s.phase))?Number(s.phase):0));if(typeof s.session!=='string'||!s.session)s.session=base.session;if(!Number.isFinite(Number(s.seed)))s.seed=base.seed;return s}
+function load(){try{const raw=localStorage.getItem(STATE_KEY);if(raw){let parsed;try{parsed=JSON.parse(raw)}catch{parsed={}};const s=normalizeState(parsed);try{localStorage.setItem(STATE_KEY,JSON.stringify(s))}catch{};return s}const s=normalizeState(migrate(fresh()));try{localStorage.setItem(STATE_KEY,JSON.stringify(s))}catch{};return s}catch{return normalizeState(fresh())}}
+function save(s){try{localStorage.setItem(STATE_KEY,JSON.stringify(s))}catch{};try{window.dispatchEvent(new CustomEvent('landiddle-state',{detail:s}))}catch{};return s}
 function mutate(fn){const s=load();fn(s);return save(s)}
 function addUnique(s,k,v){if(!s[k].includes(v))s[k].push(v)}
 function setPhaseOn(s,n){if(n>s.phase)s.phase=Math.min(4,n)}
@@ -33,7 +34,7 @@ function nowISO(){return new Date().toISOString()}
 function historyTitle(path){const p=path.replace(/^\//,'')||'gateway';return p.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase())}
 const State={
   read:load,write:save,
-  reset(){localStorage.removeItem(STATE_KEY);localStorage.removeItem(OLD_KEY);location.href='/'},
+  reset(){try{localStorage.removeItem(STATE_KEY);localStorage.removeItem(OLD_KEY)}catch{};location.href='/'},
   add(bucket,id){return mutate(s=>addUnique(s,bucket,id))},
   file(id){return mutate(s=>{addUnique(s,'opened',id);s.readCounts[id]=(s.readCounts[id]||0)+1;if(id==='LF-007')addUnique(s,'achievements','unauthorized')})},
   clue(id){return mutate(s=>addUnique(s,'clues',id))},

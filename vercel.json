@@ -1,7 +1,93 @@
 {
-  "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    {"source": "/archive/deleted", "destination": "/archive-deleted.html"}
+    {
+      "source": "/404-but-worse",
+      "destination": "/404-but-worse.html"
+    },
+    {
+      "source": "/archive-deleted",
+      "destination": "/archive-deleted.html"
+    },
+    {
+      "source": "/archive/deleted",
+      "destination": "/archive-deleted.html"
+    },
+    {
+      "source": "/audio",
+      "destination": "/audio.html"
+    },
+    {
+      "source": "/basement",
+      "destination": "/basement.html"
+    },
+    {
+      "source": "/bonzi",
+      "destination": "/bonzi.html"
+    },
+    {
+      "source": "/cameras",
+      "destination": "/cameras.html"
+    },
+    {
+      "source": "/caseboard",
+      "destination": "/caseboard.html"
+    },
+    {
+      "source": "/classified",
+      "destination": "/classified.html"
+    },
+    {
+      "source": "/console",
+      "destination": "/console.html"
+    },
+    {
+      "source": "/directory",
+      "destination": "/directory.html"
+    },
+    {
+      "source": "/employee-000",
+      "destination": "/employee-000.html"
+    },
+    {
+      "source": "/ending",
+      "destination": "/ending.html"
+    },
+    {
+      "source": "/facility-map",
+      "destination": "/facility-map.html"
+    },
+    {
+      "source": "/government",
+      "destination": "/government.html"
+    },
+    {
+      "source": "/history",
+      "destination": "/history.html"
+    },
+    {
+      "source": "/incident-714",
+      "destination": "/incident-714.html"
+    },
+    {
+      "source": "/mailbox",
+      "destination": "/mailbox.html"
+    },
+    {
+      "source": "/null",
+      "destination": "/null.html"
+    },
+    {
+      "source": "/project-landoodle",
+      "destination": "/project-landoodle.html"
+    },
+    {
+      "source": "/server03",
+      "destination": "/server03.html"
+    },
+    {
+      "source": "/timeline",
+      "destination": "/timeline.html"
+    }
   ]
 }
