@@ -1,14 +1,21 @@
-# Landiddle.lol — Landoodle Files ARG v3
+# Landiddle.lol v3.2 — static-root hardened build
 
-Flat static Vercel build. Every file lives in this single directory.
+This site is plain static HTML/CSS/JS. There is no framework and no build step.
 
-## Main routes
-`/`, `/classified`, `/caseboard`, `/timeline`, `/cameras`, `/facility-map`, `/government`, `/bonzi`, `/audio`, `/mailbox`, `/directory`, `/history`.
+## Vercel
+This package's `vercel.json` explicitly sets:
+- Framework Preset: Other (`framework: null`)
+- Build Command: blank
+- Install Command: blank
+- Output Directory: `.`
+- explicit clean-route rewrites
 
-## Unindexed / discovery routes
-`/basement`, `/server03`, `/console`, `/employee-000`, `/incident-714`, `/null`, `/archive/deleted`, `/project-landoodle`, `/404-but-worse`.
+All site files must be the root of the Vercel project, not inside another folder.
 
-## State
-Progress, archive phase, login attempts, discoveries, read counts, fake internal history, achievements, recovered blocks, and endings are stored locally under `landiddle-state-v3`.
+## Deployment checks
+After deploying:
+- `/health.txt` must say `LANDIDDLE_BUILD_V3_2_STATIC_ROOT_OK`
+- `/diagnostic` must show `STATIC HTML LOADED.` and PASS for CSS, JS, and health
+- `/` must contain the Landoodle Files gateway
 
-The public audit archive credential is displayed on the archive login screen. Other credentials and routes are intended to be discovered through the site.
+If `/diagnostic` or `/health.txt` does not show those exact values, the custom domain is serving a different project/deployment or the Vercel Root Directory is incorrect.

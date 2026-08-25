@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Landiddle Deployment Diagnostic</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#07070a;color:#f5f5f8;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}main{width:min(900px,calc(100% - 32px));margin:40px auto}.box{border:1px solid #343743;border-radius:14px;background:#0f1016;padding:20px;margin:14px 0}h1{font:800 clamp(34px,7vw,72px)/.95 Arial,sans-serif;letter-spacing:-.05em;margin:0 0 18px}.ok{color:#7fffa4}.bad{color:#ff7d8c}.muted{color:#a7abb7}code{word-break:break-all}.row{display:grid;grid-template-columns:170px 1fr;gap:12px;padding:7px 0;border-bottom:1px solid #23252e}.row:last-child{border:0}a{color:#c897ff}</style>
+</head>
+<body>
+<main>
+<div class="muted">LANDIDDLE DEPLOYMENT TEST // V3.2</div>
+<h1>STATIC HTML LOADED.</h1>
+<div class="box">
+  <div class="row"><b>HTML</b><span class="ok">PASS</span></div>
+  <div class="row"><b>BUILD</b><span>V3.2 / STATIC ROOT</span></div>
+  <div class="row"><b>URL</b><code id="url">loading…</code></div>
+  <div class="row"><b>STYLE.CSS</b><span id="css">testing…</span></div>
+  <div class="row"><b>SITE.JS</b><span id="js">testing…</span></div>
+  <div class="row"><b>HEALTH.TXT</b><span id="health">testing…</span></div>
+</div>
+<div class="box"><b>What this means</b><p class="muted">If you can read this page, Vercel is serving the correct project root. If the homepage still shows only <code>0</code>, open the homepage response in DevTools Network. If this page also shows only <code>0</code>, the domain is attached to a different deployment/project or Vercel's Root Directory is pointed somewhere else.</p><p><a href="/">Return to homepage</a> · <a href="/health.txt">Open raw health marker</a></p></div>
+</main>
+<script>
+document.getElementById('url').textContent=location.href;
+async function check(url,id,contains){
+ const el=document.getElementById(id);
+ try{const r=await fetch(url,{cache:'no-store'});const t=await r.text();const good=r.ok&&(!contains||t.includes(contains));el.textContent=(good?'PASS':'FAIL')+' — HTTP '+r.status;el.className=good?'ok':'bad'}catch(e){el.textContent='FAIL — '+e.message;el.className='bad'}
+}
+check('/style.css','css','--purple');
+check('/site.js','js','LandiddleState');
+check('/health.txt','health','LANDIDDLE_BUILD_V3_2_STATIC_ROOT_OK');
+</script>
+</body>
+</html>

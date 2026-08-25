@@ -1,0 +1,4 @@
+LANDIDDLE_BUILD_V3_2_STATIC_ROOT_OK
+index=index.html
+assets=style.css,site.js
+mode=plain-static-html
